@@ -73,7 +73,7 @@
 /processorParam:TextureFormat=Color
 /build:carpa.png
 
-#begin corte.png
+#begin corte4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -83,7 +83,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:corte.png
+/build:corte4.png
+
+#begin cutSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:cutSound.wav
 
 #begin fondo.png
 /importer:TextureImporter

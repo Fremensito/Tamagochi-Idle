@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,12 +12,14 @@ namespace Tamagochi_Idle.Serreria
         private Vector2 origenCorte;
         private Texture2D tronco;
         private Texture2D troncoPartido;
+        private SoundEffect sonidoCorte;
+        
         public Rectangle Hitbox { get; set; }
         public float PosicionX { get; set; }
         public float PosicionY { get; set; }
         public Vector2 Posicion;
         public float velocidadTronquito;
-        public Boolean SiendoCortado { get; set; }
+        public bool SiendoCortado { get; set; }
         public int ContadorDesaparecer;
 
         public Tronquito(float posicionX, float posicionY, ContentManager content)
@@ -29,6 +32,7 @@ namespace Tamagochi_Idle.Serreria
             Posicion = new Vector2(posicionX, posicionY);
             SiendoCortado = false;
             ContadorDesaparecer = 0;
+            sonidoCorte = content.Load<SoundEffect>("cutSound");
         }
 
         public void Update(float velocidadTronquito)
@@ -49,8 +53,11 @@ namespace Tamagochi_Idle.Serreria
         public void FinalizarCorte(Vector2 finalCorte)
         {
             float distancia = Vector2.Distance(finalCorte, origenCorte);
-            if (distancia >= tronco.Width - 40)
+            if (distancia >= tronco.Width - 60)
+            {
                 Cortado = true;
+                sonidoCorte.Play();
+            }
         }
 
         public void Caer()

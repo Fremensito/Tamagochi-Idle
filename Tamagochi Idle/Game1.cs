@@ -53,7 +53,7 @@ namespace Tamagochi_Idle
             /*escenarioPrincipal.LoadContent(Content);
             escenarioPesca.LoadContent(Content);
             transicion.LoadContent(Content);*/
-            serreriaManager = new SerreriaManager(Content);
+            serreriaManager = new SerreriaManager();
         }
 
         protected override void Update(GameTime gameTime)
