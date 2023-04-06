@@ -16,13 +16,13 @@ namespace Tamagochi_Idle
         EscenarioPesca escenarioPesca;
         Transition transicion;
 
+        private EscenarioSerreria escenarioSerreria;
+
         private int width = 900;
         private int height = 700;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        private SerreriaManager serreriaManager;
 
         private bool test = true;
         public Game1()
@@ -53,7 +53,7 @@ namespace Tamagochi_Idle
             /*escenarioPrincipal.LoadContent(Content);
             escenarioPesca.LoadContent(Content);
             transicion.LoadContent(Content);*/
-            serreriaManager = new SerreriaManager();
+            escenarioSerreria = new EscenarioSerreria(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,7 +74,7 @@ namespace Tamagochi_Idle
             escenarioPesca.Update(gameTime.ElapsedGameTime);
 
             base.Update(gameTime);*/
-            serreriaManager.Update(Content);
+            escenarioSerreria.Update();
         }
 
         protected override void Draw(GameTime gameTime)
@@ -85,7 +85,7 @@ namespace Tamagochi_Idle
             /*escenarioPesca.Draw(_spriteBatch);
             escenarioPrincipal.Draw(_spriteBatch);
             transicion.Draw(_spriteBatch);*/
-            serreriaManager.Draw(_spriteBatch);
+            escenarioSerreria.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
