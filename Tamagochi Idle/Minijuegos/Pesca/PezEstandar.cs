@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tamagochi_Idle.Pesca
+namespace Tamagochi_Idle.Minijuegos.Pesca
 {
-    internal class PezEstandar:Pez
+    internal class PezEstandar : Pez
     {
         public PezEstandar()
         {

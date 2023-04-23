@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace Tamagochi_Idle.Serreria
+namespace Tamagochi_Idle.Minijuegos.Serreria
 {
     internal class SerreriaGameObject
     {
@@ -19,9 +19,8 @@ namespace Tamagochi_Idle.Serreria
         public Vector2 Posicion;
         public float velocidadMovimiento;
         public bool SiendoCortado { get; set; }
-
         public int ContadorDesaparecer;
-
+        public bool DarPunto { get; set; }
         public SerreriaGameObject(float posicionX, float posicionY)
         {
             Cortado = false;
@@ -30,6 +29,7 @@ namespace Tamagochi_Idle.Serreria
             Posicion = new Vector2(posicionX, posicionY);
             SiendoCortado = false;
             ContadorDesaparecer = 0;
+            DarPunto = false;
         }
 
         public void Update(float velocidadMovimiento)
@@ -53,6 +53,7 @@ namespace Tamagochi_Idle.Serreria
             if (distancia >= texturaCompacto.Width - 60)
             {
                 Cortado = true;
+                DarPunto = true;
                 sonidoCorte.Play();
             }
         }
@@ -68,7 +69,6 @@ namespace Tamagochi_Idle.Serreria
             else
                 spriteBatch.Draw(texturaCompacto, Posicion, Color.White);
         }
-
         public void Unload()
         {
             texturaCompacto.Dispose();

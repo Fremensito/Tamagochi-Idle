@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Tamagochi_Idle.Pesca
+namespace Tamagochi_Idle.Minijuegos.Pesca
 {
     internal class SeccionMinijuego
     {
@@ -30,10 +30,10 @@ namespace Tamagochi_Idle.Pesca
         }
         public void Update(TimeSpan gameTime)
         {
-            if(rd.Next(1, 1001) <= probabilidadEstandar)
+            if (rd.Next(1, 1001) <= probabilidadEstandar)
             {
                 pezEstandar.PosicionY = rd.Next(limiteSuperior, limiteInferior + 1);
-                pecesEstandar.Add(new PezEstandar(pezEstandar.Sprite, (float)rd.Next(limiteSuperior, limiteInferior +1)));
+                pecesEstandar.Add(new PezEstandar(pezEstandar.Sprite, rd.Next(limiteSuperior, limiteInferior + 1)));
             }
             for (int i = 0; i < pecesEstandar.Count; i++)
             {

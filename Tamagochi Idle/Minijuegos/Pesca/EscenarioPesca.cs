@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Tamagochi_Idle.Pesca
+namespace Tamagochi_Idle.Minijuegos.Pesca
 {
     internal class EscenarioPesca
     {
@@ -18,8 +18,8 @@ namespace Tamagochi_Idle.Pesca
         public EscenarioPesca()
         {
             Activo = false;
-            bordeSuperior = new Borde(new Vector2(0,225));
-            bordeInferior = new Borde(new Vector2(0,625));
+            bordeSuperior = new Borde(new Vector2(0, 225));
+            bordeInferior = new Borde(new Vector2(0, 625));
             seccionMinijuego = new SeccionMinijuego();
         }
 

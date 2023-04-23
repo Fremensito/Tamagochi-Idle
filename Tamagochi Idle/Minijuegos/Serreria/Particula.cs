@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace Tamagochi_Idle.Serreria
+namespace Tamagochi_Idle.Minijuegos.Serreria
 {
     internal class Particula
     {
@@ -14,7 +14,7 @@ namespace Tamagochi_Idle.Serreria
         public byte ContadorDesaparecer = 0;
         public Particula(Dictionary<string, Texture2D> texturas)
         {
-            switch((new Random()).Next(1, 5))
+            switch (new Random().Next(1, 5))
             {
                 case 1: textura = texturas["particula 1"]; break;
                 case 2: textura = texturas["particula 2"]; break;
@@ -24,7 +24,7 @@ namespace Tamagochi_Idle.Serreria
 
             posicion = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-            direccion = (new Random()).Next(1, 9);
+            direccion = new Random().Next(1, 9);
         }
         public void Moverse()
         {
@@ -33,7 +33,7 @@ namespace Tamagochi_Idle.Serreria
             {
                 case 1: posicion.X -= 2; posicion.Y -= 2; break;
                 case 2: posicion.Y -= 2; break;
-                case 3: posicion.X += 2 ; posicion.Y -= 2; break;
+                case 3: posicion.X += 2; posicion.Y -= 2; break;
                 case 4: posicion.X += 2; break;
                 case 5: posicion.X += 2; posicion.Y += 2; break;
                 case 6: posicion.Y += 2; break;

@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Tamagochi_Idle.Serreria
+namespace Tamagochi_Idle.Minijuegos.Serreria
 {
-    internal class Tronquito:SerreriaGameObject
+    internal class Tronquito : SerreriaGameObject
     {
-        public Tronquito(float posicionX, float posicionY, Dictionary<string, Texture2D> texturas, Dictionary<string, SoundEffect> sonidos) 
+        public Tronquito(float posicionX, float posicionY, Dictionary<string, Texture2D> texturas, Dictionary<string, SoundEffect> sonidos)
             : base(posicionX, posicionY)
         {
             texturaCompacto = texturas["tronco"];

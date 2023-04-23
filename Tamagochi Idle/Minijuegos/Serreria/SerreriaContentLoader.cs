@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
-namespace Tamagochi_Idle.Serreria
+namespace Tamagochi_Idle.Minijuegos.Serreria
 {
     internal static class SerreriaContentLoader
     {
@@ -20,6 +19,9 @@ namespace Tamagochi_Idle.Serreria
             texturas.Add("particula 2", content.Load<Texture2D>("serreria/woodParticle2"));
             texturas.Add("particula 3", content.Load<Texture2D>("serreria/woodParticle3"));
             texturas.Add("particula 4", content.Load<Texture2D>("serreria/woodParticle4"));
+            texturas.Add("corazon vivo", content.Load<Texture2D>("HeartA"));
+            texturas.Add("corazon muerto", content.Load<Texture2D>("HeartADead"));
+            texturas.Add("resultado", content.Load<Texture2D>("Resultado"));
 
             return texturas;
         }
@@ -32,6 +34,11 @@ namespace Tamagochi_Idle.Serreria
             sonidos.Add("explosion", content.Load<SoundEffect>("serreria/explosionSound"));
 
             return sonidos;
+        }
+
+        static public SpriteFont LoadSpriteFont(ContentManager content)
+        {
+            return content.Load<SpriteFont>("fuente");
         }
     }
 }

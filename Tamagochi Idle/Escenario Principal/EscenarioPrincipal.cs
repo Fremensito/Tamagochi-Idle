@@ -1,48 +1,90 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Tamagochi_Idle.Minijuegos.Serreria;
 
 namespace Tamagochi_Idle.Escenario_Principal
 {
     internal class EscenarioPrincipal
     {
-        private Texture2D fondo;
-
-        private Gato gatito;
-        public bool Activo { get; set; }
-        public CanyaJuego CanyaJuego { get; set; }
-
-        public EscenarioPrincipal()
+        private Dictionary<string, Texture2D> texturas;
+        private SpriteFont fuente;
+        private Gato gato;
+        private CanyaJuego canya;
+        private EscenarioPrincipalManager manager;
+        private bool jugar;
+        private bool contentLoaded;
+        private EscenarioSerreria serreria;
+        private MensajeSalir mensaje;
+        public EscenarioPrincipal(ContentManager content)
         {
-            CanyaJuego = new CanyaJuego();
-            gatito = new Gato();
-            Activo = true;
+            jugar = false;
+            gato = new Gato();
+            canya = new CanyaJuego();
+            manager = new EscenarioPrincipalManager();
+            contentLoaded = LoadContent(content);
+            mensaje = new MensajeSalir(texturas, fuente);
         }
-        public void LoadContent(ContentManager content)
+        public bool LoadContent(ContentManager content)
         {
-            fondo = content.Load<Texture2D>("fondo");
-            CanyaJuego.LoadContent(content);
-            gatito.LoadContent(content);
+            texturas = PrincipalContentLoader.LoadTextures(content);
+            fuente = PrincipalContentLoader.LoadSpriteFont(content);
+            return true;
         }
 
-        public void Update(TimeSpan gameTime)
+        public void Update(ContentManager content)
         {
-            if (Activo)
+            MostrarElementos (content);
+            MostrarMiniJuego (content);
+        }
+
+        private void MostrarElementos(ContentManager content)
+        {
+            if (!jugar)
             {
-                CanyaJuego.Update();
-                gatito.Update(gameTime);
+                if(!contentLoaded)
+                {
+                    contentLoaded = LoadContent(content);
+                }
+                gato.Update();
+                canya.Update(texturas);
+                manager.Update(canya, gato, mensaje, ref jugar);
+            }
+            if(mensaje.Mostrar)
+            {
+                mensaje.Update();
             }
         }
 
-        public void Draw(SpriteBatch _spriteBatch)
+        private void MostrarMiniJuego(ContentManager content)
         {
-            if (Activo)
+            if(jugar == true && contentLoaded)
             {
-                _spriteBatch.Draw(fondo, new Vector2(0, 0), Color.White);
-                gatito.Draw(_spriteBatch);
-                CanyaJuego.Draw(_spriteBatch);
+                content.Unload();
+                contentLoaded = false;
+                serreria = new EscenarioSerreria(content);
+            }
+            if(jugar)
+            {
+                jugar = serreria.Update(content);
+            }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {   
+            if (!jugar && contentLoaded)
+            {
+                spriteBatch.Draw(texturas["fondo"], new Vector2(0f, 0f), Color.White);
+                gato.Draw(spriteBatch, texturas);
+                canya.Draw(texturas, spriteBatch);
+            }
+            if(jugar)
+            {
+                serreria.Draw(spriteBatch);
+            }
+            if(mensaje.Mostrar)
+            {
+                mensaje.Draw(spriteBatch, texturas, fuente);
             }
         }
     }

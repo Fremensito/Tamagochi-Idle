@@ -1,38 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
+using System.Collections.Generic;
 
 namespace Tamagochi_Idle
 {
     internal abstract class IconoMinijuego
     {
-        protected Texture2D normal;
-        protected Texture2D seleccionado;
-
         protected Vector2 posicion;
-
         public bool CursorDentro { get; set; }
 
-        public abstract void LoadContent(ContentManager content);
-
-        public void Update()
+        public void Update(Dictionary<string, Texture2D> texturas)
         {
-            ComprobarCursor();
+            ComprobarCursor(texturas);
         }
 
-        public  void Draw(SpriteBatch _spriteBatch)
+        public  void Draw(Dictionary<string, Texture2D>texturas, SpriteBatch spriteBatch)
         {
             if (CursorDentro)
-                _spriteBatch.Draw(seleccionado, posicion, Color.White);
+                spriteBatch.Draw(texturas["hacha seleccionada"], posicion, Color.White);
             else
-                _spriteBatch.Draw(normal, posicion, Color.White);
+                spriteBatch.Draw(texturas["hacha"], posicion, Color.White);
         }
 
-        public void ComprobarCursor()
+        public void ComprobarCursor(Dictionary<string, Texture2D> texturas)
         {
-            Rectangle campoInfluencia = normal.Bounds;
+            Rectangle campoInfluencia = texturas["hacha"].Bounds;
             Point posicionCampoInfluencia = new Point((int)posicion.X, (int)posicion.Y);
             campoInfluencia.Location = posicionCampoInfluencia;
             CursorDentro = campoInfluencia.Contains(Mouse.GetState().Position);

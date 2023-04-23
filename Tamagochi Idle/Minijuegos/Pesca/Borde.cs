@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Tamagochi_Idle.Pesca
+namespace Tamagochi_Idle.Minijuegos.Pesca
 {
     internal class Borde
     {
@@ -35,8 +35,8 @@ namespace Tamagochi_Idle.Pesca
 
         public void Update(TimeSpan tiempoFrame)
         {
-            this.tiempoTranscurrido += tiempoFrame.TotalMilliseconds;
-            if (this.tiempoTranscurrido > tiempoNecesario)
+            tiempoTranscurrido += tiempoFrame.TotalMilliseconds;
+            if (tiempoTranscurrido > tiempoNecesario)
             {
                 tiempoTranscurrido = 0;
                 fila++;
@@ -49,7 +49,7 @@ namespace Tamagochi_Idle.Pesca
         public void Draw(SpriteBatch _spriteBatch)
         {
             Rectangle frame = new Rectangle(anchura * columna, altura * fila, anchura, altura);
-            _spriteBatch.Draw(sprite,posicion, frame, Color.White);
+            _spriteBatch.Draw(sprite, posicion, frame, Color.White);
         }
     }
 }

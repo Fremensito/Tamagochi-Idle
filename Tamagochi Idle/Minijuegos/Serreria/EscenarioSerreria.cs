@@ -4,43 +4,79 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using Microsoft.Xna.Framework;
+using System.Threading;
 
-namespace Tamagochi_Idle.Serreria
+namespace Tamagochi_Idle.Minijuegos.Serreria
 {
     internal class EscenarioSerreria
     {
         private SerreriaManager serreriaManager;
 
-        Dictionary<string, Texture2D> texturas;
-        Dictionary<string, SoundEffect> sonidos;
+        private Dictionary<string, Texture2D> texturas;
+        private Dictionary<string, SoundEffect> sonidos;
+        private SpriteFont fuente;
 
         private List<SerreriaGameObject> objetos;
         private List<Particula> particulas;
+        private Corazon[] corazones;
 
         private Random rd = new Random();
         private float velocidadMovimiento;
         private float spawnProc;
         private int probabilidadBomba;
+
+        private int vidas;
+        private int troncos;
+        private Resultado resultado;
         public EscenarioSerreria(ContentManager content)
         {
             serreriaManager = new SerreriaManager();
 
             texturas = SerreriaContentLoader.LoadTextures(content);
             sonidos = SerreriaContentLoader.LoadSoundEffects(content);
+            fuente = SerreriaContentLoader.LoadSpriteFont(content);
 
             objetos = new List<SerreriaGameObject>();
             particulas = new List<Particula>();
 
-            spawnProc = 5;
-            velocidadMovimiento = 4;
-            probabilidadBomba = 10;
-        }
-        public void Update()
-        {
-            GenerarObjetos();
-            serreriaManager.Update(particulas, objetos, texturas);
-        }
+            corazones = new Corazon[3];
+            corazones[0] = new Corazon(texturas, 20f, 10f);
+            corazones[1] = new Corazon(texturas, 80f, 10f);
+            corazones[2] = new Corazon(texturas, 140f, 10f);
 
+            spawnProc = 5f;
+            velocidadMovimiento = 4f;
+            probabilidadBomba = 10;
+
+            vidas = 3;
+            troncos = 0;
+        }
+        public bool Update(ContentManager content)
+        {
+            bool jugar = true;
+            if(vidas != 0)
+            {
+                GenerarObjetos();
+                RecibirPuntos();
+                AumentarDificultad();
+            }
+            else
+            {
+                if(resultado == null)
+                    resultado = new Resultado(texturas, fuente);
+                else
+                {
+                    resultado.Update();
+                    if (resultado.Fin)
+                    {
+                        jugar = false;
+                        content.Unload();
+                    }
+                }
+            }
+            serreriaManager.Update(particulas, objetos, corazones, ref vidas, texturas);
+            return jugar;
+        }
         public void GenerarObjetos()
         {
             int posicionX = rd.Next(0, 750);
@@ -64,19 +100,37 @@ namespace Tamagochi_Idle.Serreria
                         objetos.Add(new Tronquito(posicionX, posicionY, texturas, sonidos));
                 }
             }
+        }
+        public void RecibirPuntos()
+        {
+            objetos.ForEach(n =>
+            {
+                if(n is Tronquito && n.DarPunto)
+                {
+                    n.DarPunto = false;
+                    troncos++;
+                }
+            });
+        }
+        public void AumentarDificultad()
+        {
             foreach (SerreriaGameObject objeto in objetos)
                 objeto.Update(velocidadMovimiento);
             velocidadMovimiento += 0.0006f;
             spawnProc += 0.008f;
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (SerreriaGameObject objeto in objetos)
             {
-                objeto.Draw(spriteBatch);
+            objeto.Draw(spriteBatch);
             }
             particulas.ForEach(n => n.Draw(spriteBatch));
+            foreach(Corazon corazon in corazones)
+                corazon.Draw(spriteBatch);
+            spriteBatch.DrawString(fuente, "Score: " + troncos, new Vector2(20, 620), Color.SaddleBrown);
+            if(resultado != null)
+                resultado.Draw(spriteBatch, troncos);
         }
     }
 }
