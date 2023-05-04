@@ -218,6 +218,18 @@
 /processorParam:Quality=Best
 /build:serreria/cutSound.wav
 
+#begin serreria/diagonalCutWood.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:serreria/diagonalCutWood.png
+
 #begin serreria/explosion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -235,6 +247,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:serreria/explosionSound.wav
+
+#begin serreria/horizontalCutWood.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:serreria/horizontalCutWood.png
 
 #begin serreria/tronco.png
 /importer:TextureImporter

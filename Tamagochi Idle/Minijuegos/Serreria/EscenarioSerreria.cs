@@ -32,7 +32,7 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
         {
             serreriaManager = new SerreriaManager();
 
-            texturas = SerreriaContentLoader.LoadTextures(content);
+            texturas = SerreriaContentLoader.getTexturas(content);
             sonidos = SerreriaContentLoader.LoadSoundEffects(content);
             fuente = SerreriaContentLoader.LoadSpriteFont(content);
 
@@ -70,7 +70,6 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
                     if (resultado.Fin)
                     {
                         jugar = false;
-                        content.Unload();
                     }
                 }
             }

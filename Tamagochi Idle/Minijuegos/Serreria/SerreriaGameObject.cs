@@ -9,17 +9,17 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
     {
         public bool Cortado { get; set; }
         protected Vector2 origenCorte;
-        public Texture2D texturaCompacto { get; set; }
-        public Texture2D texturaCortado { get; set; }
+        protected Texture2D texturaCompacto;
+        protected Texture2D texturaCortado;
         protected SoundEffect sonidoCorte;
 
         public Rectangle Hitbox { get; set; }
         public float PosicionX { get; set; }
         public float PosicionY { get; set; }
         public Vector2 Posicion;
-        public float velocidadMovimiento;
+        private float velocidadMovimiento;
         public bool SiendoCortado { get; set; }
-        public int ContadorDesaparecer;
+        public int ContadorDesaparecer { get; set;}
         public bool DarPunto { get; set; }
         public SerreriaGameObject(float posicionX, float posicionY)
         {
@@ -47,10 +47,10 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
             this.origenCorte = origenCorte;
         }
 
-        public void FinalizarCorte(Vector2 finalCorte)
+        public virtual void FinalizarCorte(Vector2 finalCorte)
         {
             float distancia = Vector2.Distance(finalCorte, origenCorte);
-            if (distancia >= texturaCompacto.Width - 60)
+            if (distancia >= texturaCompacto.Width - 40)
             {
                 Cortado = true;
                 DarPunto = true;
@@ -62,18 +62,12 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
         {
             Posicion.Y += velocidadMovimiento;
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (Cortado)
                 spriteBatch.Draw(texturaCortado, Posicion, Color.White);
             else
                 spriteBatch.Draw(texturaCompacto, Posicion, Color.White);
-        }
-        public void Unload()
-        {
-            texturaCompacto.Dispose();
-            texturaCortado.Dispose();
-            sonidoCorte.Dispose();
         }
     }
 }

@@ -35,15 +35,15 @@ namespace Tamagochi_Idle.Escenario_Principal
 
         public void Update(ContentManager content)
         {
-            MostrarElementos (content);
-            MostrarMiniJuego (content);
+            MostrarElementos(content);
+            MostrarMiniJuego(content);
         }
 
         private void MostrarElementos(ContentManager content)
         {
             if (!jugar)
             {
-                if(!contentLoaded)
+                if (!contentLoaded)
                 {
                     contentLoaded = LoadContent(content);
                 }
@@ -51,7 +51,7 @@ namespace Tamagochi_Idle.Escenario_Principal
                 canya.Update(texturas);
                 manager.Update(canya, gato, mensaje, ref jugar);
             }
-            if(mensaje.Mostrar)
+            if (mensaje.Mostrar)
             {
                 mensaje.Update();
             }
@@ -59,30 +59,29 @@ namespace Tamagochi_Idle.Escenario_Principal
 
         private void MostrarMiniJuego(ContentManager content)
         {
-            if(jugar == true && contentLoaded)
+            if (jugar == true && contentLoaded)
             {
-                content.Unload();
                 contentLoaded = false;
                 serreria = new EscenarioSerreria(content);
             }
-            if(jugar)
+            if (jugar)
             {
                 jugar = serreria.Update(content);
             }
         }
         public void Draw(SpriteBatch spriteBatch)
-        {   
+        {
             if (!jugar && contentLoaded)
             {
                 spriteBatch.Draw(texturas["fondo"], new Vector2(0f, 0f), Color.White);
                 gato.Draw(spriteBatch, texturas);
                 canya.Draw(texturas, spriteBatch);
             }
-            if(jugar)
+            if (jugar)
             {
                 serreria.Draw(spriteBatch);
             }
-            if(mensaje.Mostrar)
+            if (mensaje.Mostrar)
             {
                 mensaje.Draw(spriteBatch, texturas, fuente);
             }
