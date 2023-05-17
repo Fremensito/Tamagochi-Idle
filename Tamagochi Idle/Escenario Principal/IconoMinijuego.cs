@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace Tamagochi_Idle
+namespace Tamagochi_Idle.Escenario_Principal
 {
     internal abstract class IconoMinijuego
     {
@@ -15,9 +15,9 @@ namespace Tamagochi_Idle
             ComprobarCursor(texturas);
         }
 
-        public  void Draw(Dictionary<string, Texture2D>texturas, SpriteBatch spriteBatch)
+        public  void Draw(Dictionary<string, Texture2D>texturas, SpriteBatch spriteBatch, Gato gato)
         {
-            if (CursorDentro)
+            if (CursorDentro && !gato.Durmiendo)
                 spriteBatch.Draw(texturas["hacha seleccionada"], posicion, Color.White);
             else
                 spriteBatch.Draw(texturas["hacha"], posicion, Color.White);

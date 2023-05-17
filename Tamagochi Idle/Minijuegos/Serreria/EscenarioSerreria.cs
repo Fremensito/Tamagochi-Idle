@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using Microsoft.Xna.Framework;
-using System.Threading;
+using Tamagochi_Idle.Escenario_Principal;
 
 namespace Tamagochi_Idle.Minijuegos.Serreria
 {
@@ -51,7 +51,7 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
             vidas = 3;
             troncos = 0;
         }
-        public bool Update(ContentManager content)
+        public bool Update(ContentManager content, Gato gato)
         {
             bool jugar = true;
             if(vidas != 0)
@@ -70,6 +70,7 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
                     if (resultado.Fin)
                     {
                         jugar = false;
+                        gato.Oro += troncos/3;
                     }
                 }
             }
@@ -78,7 +79,7 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
         }
         public void GenerarObjetos()
         {
-            int posicionX = rd.Next(0, 750);
+            int posicionX = rd.Next(50, 700);
             int posicionY = -150;
             bool anyadir = true;
 

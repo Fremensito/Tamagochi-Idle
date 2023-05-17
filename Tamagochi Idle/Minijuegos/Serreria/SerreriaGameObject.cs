@@ -50,7 +50,7 @@ namespace Tamagochi_Idle.Minijuegos.Serreria
         public virtual void FinalizarCorte(Vector2 finalCorte)
         {
             float distancia = Vector2.Distance(finalCorte, origenCorte);
-            if (distancia >= texturaCompacto.Width - 40)
+            if (distancia >= texturaCompacto.Width - 30)
             {
                 Cortado = true;
                 DarPunto = true;

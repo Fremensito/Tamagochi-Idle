@@ -29,6 +29,11 @@ namespace Tamagochi_Idle.Escenario_Principal
         private int probabilidadCaminar = 4;
 
         public Energia Energia{get; set;}
+
+        public Hambre Hambre{get; set;}
+        public int Oro  {get; set;}
+        public bool Vivo {get; set;}
+        public bool Durmiendo{get; set;}
         Random rd;
         public Gato()
         {
@@ -50,29 +55,49 @@ namespace Tamagochi_Idle.Escenario_Principal
             contadorCaminar = 0;
 
             Energia = new Energia();
+            Hambre = new Hambre();
         }
         public void Update()
         {
-            contadorCaminar++;
-            if(contadorCaminar > contadorNecesarioCaminar)
+            if(!Durmiendo)
             {
-                if (!caminando)
-                    EligirSentido();
-                if (caminando)
-                    Caminar();
-                RestringirMovimiento();
-                contadorCaminar = 0;
+                contadorCaminar++;
+                if(contadorCaminar > contadorNecesarioCaminar)
+                {
+                    if (!caminando)
+                        EligirSentido();
+                    if (caminando)
+                        Caminar();
+                    RestringirMovimiento();
+                    contadorCaminar = 0;
+                }
+                Energia.Desgastar();
             }
+            else
+            {
+                Energia.Recuperar();
+                if(Energia.Cantidad == Energia.getLimiteCantidad())
+                    Durmiendo = false;
+            }
+            Hambre.Desgastar();
         }
 
-        public void Draw(SpriteBatch _spriteBatch, Dictionary<string, Texture2D> texturas)
+        public void Draw(SpriteBatch _spriteBatch, Dictionary<string, Texture2D> texturas, SpriteFont fuente)
         {
-            Rectangle frameCaminar = new Rectangle(anchuraCaminar * columnaCaminar, alturaCaminar * filaCaminar, anchuraCaminar, alturaCaminar);
-            if(sentidoDerecha)
-                _spriteBatch.Draw(texturas["gato"], new Vector2(posicionX, posicionY), frameCaminar, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            if(!Durmiendo)
+            {
+                Rectangle frameCaminar = new Rectangle(anchuraCaminar * columnaCaminar, alturaCaminar * filaCaminar, anchuraCaminar, alturaCaminar);
+                if(sentidoDerecha)
+                    _spriteBatch.Draw(texturas["gato"], new Vector2(posicionX, posicionY), frameCaminar, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                else
+                    _spriteBatch.Draw(texturas["gato"], new Vector2(posicionX, posicionY), frameCaminar, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.FlipHorizontally, 0f);
+            }
+            if(Hambre.CursorDentro && !Durmiendo && Hambre.Cantidad > 0)
+                _spriteBatch.DrawString(fuente, "Oro: " + (Oro - Hambre.Precio), new Vector2(20, 300), Color.Red);
             else
-                _spriteBatch.Draw(texturas["gato"], new Vector2(posicionX, posicionY), frameCaminar, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.FlipHorizontally, 0f);
-            Energia.Draw(_spriteBatch, texturas);
+                _spriteBatch.DrawString(fuente, "Oro: " + Oro, new Vector2(20, 300), Color.DarkGoldenrod);
+            Energia.Draw(_spriteBatch, texturas["energia"], Durmiendo);
+            Hambre.Draw(_spriteBatch, texturas["hambre"], Durmiendo);
         }
 
         public void EligirSentido()

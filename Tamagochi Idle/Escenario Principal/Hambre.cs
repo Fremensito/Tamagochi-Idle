@@ -1,43 +1,47 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Tamagochi_Idle.Escenario_Principal
 {
-    internal class Energia: Vitalidad
+    internal class Hambre:Vitalidad
     {
-        private const int recuperacion = 40;
-        private const int desgaste = 1;
-        public Energia()
-        {  
-            posicion = new Vector2(14f, -30f);
-        }
+        public int Hambruna { get; set; }
+        private const int gananciaHambruna = 1;
+        private const int desgaste = 40;
+        public int Precio { get; set;}
 
-        public void Recuperar()
+        public Hambre()
         {
-            int diferencia = (int) DateTime.Now.Subtract(Tiempo).TotalMinutes;
-            if(Cantidad < limiteCantidad)
-            {
-                while(Cantidad < limiteCantidad && diferencia >= recuperacion)
-                {
-                    Cantidad++;
-                    diferencia -= recuperacion;
-                    Tiempo = Tiempo.AddMinutes(recuperacion);
-                }
-            }
+            posicion = new Vector2(14f, 130f);
+            CursorDentro = false;
         }
 
         public void Desgastar()
         {
-            int diferencia = (int) DateTime.Now.Subtract(Tiempo).TotalHours;
-            if(Cantidad > 0)
+            int diferencia = (int) DateTime.Now.Subtract(Tiempo).TotalMinutes;
+            
+            if(Cantidad < limiteCantidad)
             {
-                while(Cantidad > 0 && diferencia >= desgaste)
+                while(Cantidad < limiteCantidad && diferencia >= desgaste)
                 {
-                    Cantidad--;
+                    Cantidad++;
                     diferencia -= desgaste;
-                    Tiempo = Tiempo.AddHours(desgaste);
+                    Tiempo = Tiempo.AddMinutes(desgaste);
+                }
+            }
+        }
+
+        public void GanarHambruna()
+        {
+            int diferencia = (int) DateTime.Now.Subtract(Tiempo).TotalHours;
+            if(Hambruna < limiteCantidad)
+            {
+                while(Hambruna < limiteCantidad && diferencia >= gananciaHambruna)
+                {
+                    Hambruna++;
+                    diferencia -= gananciaHambruna;
+                    Tiempo = Tiempo.AddHours(gananciaHambruna);
                 }
             }
         }
@@ -47,7 +51,7 @@ namespace Tamagochi_Idle.Escenario_Principal
             Rectangle fraccionSprite = new Rectangle(anchuraHambreSprite * Cantidad, 0, anchuraHambreSprite, anchuraHambreSprite);
             ComprobarCursor();
             //if cursorDentro scale the drawing
-            if(CursorDentro && Cantidad < limiteCantidad && !durmiendo)
+            if(CursorDentro && Cantidad > 0 && !durmiendo)
                 spriteBatch.Draw(textura, posicion, fraccionSprite, Color.White, 0f, Vector2.Zero, 1.1f, SpriteEffects.None, 0f);
             else
                 spriteBatch.Draw(textura, posicion, fraccionSprite, Color.White);
